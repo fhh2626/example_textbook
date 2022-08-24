@@ -1,0 +1,55 @@
+colvarsTrajFrequency 1000
+colvarsRestartFrequency 10000
+
+colvar {
+	name phi
+	lowerboundary -180.0
+	upperboundary 180.0
+	width 5.0
+	
+	extendedLagrangian    on
+	extendedFluctuation   5.0
+	#expandBoundaries      on
+    subtractAppliedForce  on
+	
+	dihedral {
+		group1 {atomNumbers {5}}
+		group2 {atomNumbers {7}}
+		group3 {atomNumbers {9}}
+		group4 {atomNumbers {15}}
+	}
+}
+
+colvar {
+	name psi
+	lowerboundary -180.0
+	upperboundary 180.0
+	width 5.0
+	
+	extendedLagrangian    on
+	extendedFluctuation   5.0
+	#expandBoundaries      on
+    subtractAppliedForce  on
+	
+	dihedral {
+		group1 {atomNumbers {7}}
+		group2 {atomNumbers {9}}
+		group3 {atomNumbers {15}}
+		group4 {atomNumbers {17}}
+	}
+} 
+
+abf {
+    colvars phi psi
+    writeCZARwindowFile yes
+    fullSamples 500
+    historyFreq 10000
+}
+
+metadynamics {
+    colvars phi psi
+    hillWeight 0.05
+    hillWidth 3.0
+    wellTempered on
+    biasTemperature 4000
+}
